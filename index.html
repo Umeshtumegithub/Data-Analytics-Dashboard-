@@ -1,359 +1,141 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UMESH Academy | Premium Tutorial Website</title>
+export default function DataAnalyticsDashboard() { const salesData = [ { month: 'Jan', sales: 4000, profit: 1200 }, { month: 'Feb', sales: 3000, profit: 900 }, { month: 'Mar', sales: 5000, profit: 1800 }, { month: 'Apr', sales: 4500, profit: 1500 }, { month: 'May', sales: 6000, profit: 2200 }, { month: 'Jun', sales: 7000, profit: 2600 }, ];
 
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial, Helvetica, sans-serif;
-scroll-behavior:smooth;
-}
+const regionData = [ { name: 'South', value: 35 }, { name: 'North', value: 25 }, { name: 'East', value: 20 }, { name: 'West', value: 20 }, ];
 
-body{
-background:#0d1117;
-color:white;
-}
+const customerData = [ { customer: 'A', orders: 120 }, { customer: 'B', orders: 98 }, { customer: 'C', orders: 86 }, { customer: 'D', orders: 99 }, ];
 
-/* Navbar */
-nav{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:20px 50px;
-background:#161b22;
-position:sticky;
-top:0;
-z-index:1000;
-}
+return ( <div className="min-h-screen bg-slate-950 text-white p-6"> <div className="max-w-7xl mx-auto"> <div className="flex flex-col md:flex-row justify-between items-center mb-8"> <div> <h1 className="text-4xl font-bold">Umesh T - Data Analytics Dashboard</h1> <p className="text-slate-400 mt-2"> Demonstrating analytics, visualization, KPI tracking & business insights </p> </div>
 
-nav h1{
-color:#58a6ff;
-font-size:28px;
-}
+<div className="mt-4 md:mt-0">
+        <button className="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-2xl shadow-lg transition-all">
+          Download Report
+        </button>
+      </div>
+    </div>
 
-nav ul{
-display:flex;
-gap:25px;
-list-style:none;
-}
+    {/* KPI Cards */}
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      <div className="bg-slate-900 p-6 rounded-3xl shadow-xl border border-slate-800">
+        <h2 className="text-slate-400">Total Revenue</h2>
+        <p className="text-3xl font-bold mt-2">₹1,25,000</p>
+        <span className="text-green-400 text-sm">+18% Growth</span>
+      </div>
 
-nav ul li a{
-color:white;
-text-decoration:none;
-font-size:18px;
-transition:0.3s;
-}
+      <div className="bg-slate-900 p-6 rounded-3xl shadow-xl border border-slate-800">
+        <h2 className="text-slate-400">Total Profit</h2>
+        <p className="text-3xl font-bold mt-2">₹45,000</p>
+        <span className="text-green-400 text-sm">+12% Growth</span>
+      </div>
 
-nav ul li a:hover{
-color:#58a6ff;
-}
+      <div className="bg-slate-900 p-6 rounded-3xl shadow-xl border border-slate-800">
+        <h2 className="text-slate-400">Customers</h2>
+        <p className="text-3xl font-bold mt-2">3,240</p>
+        <span className="text-blue-400 text-sm">Active Users</span>
+      </div>
 
-/* Hero */
-.hero{
-height:90vh;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-text-align:center;
-padding:20px;
-background:linear-gradient(to right,#0d1117,#161b22);
-}
+      <div className="bg-slate-900 p-6 rounded-3xl shadow-xl border border-slate-800">
+        <h2 className="text-slate-400">Conversion Rate</h2>
+        <p className="text-3xl font-bold mt-2">24%</p>
+        <span className="text-yellow-400 text-sm">Marketing Optimized</span>
+      </div>
+    </div>
 
-.hero h2{
-font-size:55px;
-margin-bottom:15px;
-}
+    {/* Charts */}
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+      <div className="bg-slate-900 rounded-3xl p-6 border border-slate-800 shadow-xl">
+        <h2 className="text-2xl font-semibold mb-4">Sales & Profit Analysis</h2>
 
-.hero span{
-color:#58a6ff;
-}
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={salesData}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+            <XAxis dataKey="month" stroke="#fff" />
+            <YAxis stroke="#fff" />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="sales" fill="#3b82f6" radius={[10, 10, 0, 0]} />
+            <Bar dataKey="profit" fill="#10b981" radius={[10, 10, 0, 0]} />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
 
-.hero p{
-font-size:20px;
-max-width:700px;
-margin-bottom:30px;
-}
+      <div className="bg-slate-900 rounded-3xl p-6 border border-slate-800 shadow-xl">
+        <h2 className="text-2xl font-semibold mb-4">Regional Performance</h2>
 
-.btn{
-padding:15px 35px;
-background:#238636;
-color:white;
-text-decoration:none;
-border:none;
-border-radius:8px;
-font-size:18px;
-cursor:pointer;
-transition:0.3s;
-}
+        <ResponsiveContainer width="100%" height={300}>
+          <PieChart>
+            <Pie
+              data={regionData}
+              cx="50%"
+              cy="50%"
+              outerRadius={100}
+              fill="#8884d8"
+              dataKey="value"
+              label
+            >
+              {regionData.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={['#3b82f6', '#10b981', '#f59e0b', '#ef4444'][index % 4]}
+                />
+              ))}
+            </Pie>
+            <Tooltip />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
 
-.btn:hover{
-background:#2ea043;
-transform:scale(1.05);
-}
+    {/* Customer Table */}
+    <div className="bg-slate-900 rounded-3xl p-6 border border-slate-800 shadow-xl mb-8 overflow-auto">
+      <h2 className="text-2xl font-semibold mb-4">Top Customers</h2>
 
-/* Section */
-section{
-padding:70px 50px;
-}
+      <table className="w-full text-left border-collapse">
+        <thead>
+          <tr className="border-b border-slate-700">
+            <th className="py-3">Customer</th>
+            <th className="py-3">Orders</th>
+            <th className="py-3">Status</th>
+          </tr>
+        </thead>
 
-.title{
-text-align:center;
-font-size:40px;
-margin-bottom:40px;
-color:#58a6ff;
-}
+        <tbody>
+          {customerData.map((item, index) => (
+            <tr key={index} className="border-b border-slate-800 hover:bg-slate-800 transition-all">
+              <td className="py-3">Customer {item.customer}</td>
+              <td className="py-3">{item.orders}</td>
+              <td className="py-3 text-green-400">Active</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
 
-/* Cards */
-.cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
-}
+    {/* Skills Section */}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="bg-slate-900 p-6 rounded-3xl border border-slate-800 shadow-xl">
+        <h2 className="text-xl font-semibold mb-2">Python & Pandas</h2>
+        <p className="text-slate-400">
+          Data cleaning, preprocessing, EDA, feature engineering & analytics.
+        </p>
+      </div>
 
-.card{
-background:#161b22;
-padding:30px;
-border-radius:15px;
-text-align:center;
-transition:0.4s;
-}
+      <div className="bg-slate-900 p-6 rounded-3xl border border-slate-800 shadow-xl">
+        <h2 className="text-xl font-semibold mb-2">Power BI & Excel</h2>
+        <p className="text-slate-400">
+          Interactive dashboards, KPI tracking, business reports & insights.
+        </p>
+      </div>
 
-.card:hover{
-transform:translateY(-10px);
-box-shadow:0 0 20px #58a6ff;
-}
-
-.card h3{
-margin-bottom:15px;
-font-size:28px;
-}
-
-.card p{
-font-size:16px;
-margin-bottom:20px;
-}
-
-.card button{
-padding:12px 20px;
-border:none;
-background:#58a6ff;
-color:white;
-border-radius:8px;
-cursor:pointer;
-}
-
-/* Dashboard */
-.dashboard{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
-}
-
-.box{
-background:#161b22;
-padding:25px;
-border-radius:15px;
-text-align:center;
-}
-
-/* Contact */
-form{
-max-width:500px;
-margin:auto;
-display:flex;
-flex-direction:column;
-gap:15px;
-}
-
-input,textarea{
-padding:15px;
-border:none;
-border-radius:8px;
-outline:none;
-}
-
-textarea{
-height:120px;
-resize:none;
-}
-
-footer{
-background:#161b22;
-text-align:center;
-padding:25px;
-margin-top:50px;
-}
-
-/* Responsive */
-@media(max-width:768px){
-nav{
-flex-direction:column;
-gap:15px;
-padding:20px;
-}
-nav ul{
-flex-wrap:wrap;
-justify-content:center;
-}
-.hero h2{
-font-size:35px;
-}
-section{
-padding:50px 20px;
-}
-}
-</style>
-</head>
-
-<body>
-
-<!-- Navbar -->
-<nav>
-<h1>UMESH Academy</h1>
-<ul>
-<li><a href="#home">Home</a></li>
-<li><a href="#subjects">Subjects</a></li>
-<li><a href="#live">Live Classes</a></li>
-<li><a href="#dashboard">Dashboard</a></li>
-<li><a href="#contact">Contact</a></li>
-</ul>
-</nav>
-
-<!-- Hero -->
-<section class="hero" id="home">
-<h2>Welcome to <span>UMESH Academy</span></h2>
-<p>Premium Computer Science / Information Science Tutorial Website with Live Classes, Notes, Dashboard & More.</p>
-<a href="#subjects" class="btn">Explore Courses</a>
-</section>
-
-<!-- Subjects -->
-<section id="subjects">
-<h2 class="title">Subjects</h2>
-
-<div class="cards">
-
-<div class="card">
-<h3>Python</h3>
-<p>Learn Python from beginner to advanced with projects.</p>
-<button onclick="alert('Opening Python Course')">Start</button>
+      <div className="bg-slate-900 p-6 rounded-3xl border border-slate-800 shadow-xl">
+        <h2 className="text-xl font-semibold mb-2">SQL & Visualization</h2>
+        <p className="text-slate-400">
+          Database querying, trend analysis, charts & reporting systems.
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="card">
-<h3>Java</h3>
-<p>Core Java, OOPs, Interview Questions.</p>
-<button onclick="alert('Opening Java Course')">Start</button>
-</div>
+); }
 
-<div class="card">
-<h3>DBMS</h3>
-<p>SQL, Queries, Normalization.</p>
-<button onclick="alert('Opening DBMS Course')">Start</button>
-</div>
-
-<div class="card">
-<h3>Web Development</h3>
-<p>HTML, CSS, JavaScript Full Stack.</p>
-<button onclick="alert('Opening Web Development Course')">Start</button>
-</div>
-
-<div class="card">
-<h3>Operating System</h3>
-<p>Scheduling, Memory, Threads.</p>
-<button onclick="alert('Opening OS Course')">Start</button>
-</div>
-
-<div class="card">
-<h3>Computer Networks</h3>
-<p>OSI, TCP/IP, Security.</p>
-<button onclick="alert('Opening CN Course')">Start</button>
-</div>
-
-</div>
-</section>
-
-<!-- Live Classes -->
-<section id="live">
-<h2 class="title">Live Classes</h2>
-
-<div class="cards">
-
-<div class="card">
-<h3>WhatsApp Video Call</h3>
-<p>Join Live Video Session with Umesh</p>
-<button onclick="window.open('https://wa.me/919999999999?text=Hi%20Umesh%20I%20want%20to%20join%20video%20class')">
-Join Now
-</button>
-</div>
-
-<div class="card">
-<h3>WhatsApp Audio Call</h3>
-<p>Join Audio Support Session</p>
-<button onclick="window.open('https://wa.me/919999999999?text=Hi%20Umesh%20I%20want%20to%20join%20audio%20class')">
-Join Now
-</button>
-</div>
-
-</div>
-</section>
-
-<!-- Dashboard -->
-<section id="dashboard">
-<h2 class="title">Student Dashboard</h2>
-
-<div class="dashboard">
-
-<div class="box">
-<h3>Courses Completed</h3>
-<p>12</p>
-</div>
-
-<div class="box">
-<h3>Certificates</h3>
-<p>5</p>
-</div>
-
-<div class="box">
-<h3>Assignments</h3>
-<p>8 Pending</p>
-</div>
-
-<div class="box">
-<h3>Progress</h3>
-<p>78%</p>
-</div>
-
-</div>
-</section>
-
-<!-- Contact -->
-<section id="contact">
-<h2 class="title">Contact UMESH</h2>
-
-<form onsubmit="sendMessage(event)">
-<input type="text" placeholder="Your Name" required>
-<input type="email" placeholder="Your Email" required>
-<textarea placeholder="Your Message" required></textarea>
-<button class="btn" type="submit">Send Message</button>
-</form>
-</section>
-
-<!-- Footer -->
-<footer>
-<p>© 2026 UMESH Academy | Premium Tutorial Website</p>
-</footer>
-
-<script>
-function sendMessage(event){
-event.preventDefault();
-alert("Message Sent Successfully!");
-}
-</script>
-
-</body>
-</html>
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid, PieChart, Pie, Cell, ResponsiveContainer, } from 'recharts';
